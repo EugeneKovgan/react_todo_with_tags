@@ -26,18 +26,20 @@ const Content = () => {
   const addNewTags = () => {};
 
   return (
-    <div className={styles.content}>
-      <div className={styles.header_block}>
-        <input
-          type="text"
-          className={styles.input}
-          placeholder={"add new tag"}
-        />
-        <button onClick={addNewTags} className={styles.add_btn}>
-          add
-        </button>
+    <div className={styles.wrapper}>
+      <div className={styles.content}>
+        <div className={styles.header_block}>
+          <input
+            type="text"
+            className={styles.input}
+            placeholder={"add new tag"}
+          />
+          <button onClick={addNewTags} className={styles.add_btn}>
+            add
+          </button>
+        </div>
+        <ToDoList todoList={todoList} setTodoList={setTodoList} />
       </div>
-      <ToDoList todoList={todoList} setTodoList={setTodoList} />
     </div>
   );
 };
