@@ -2,26 +2,34 @@ import styles from "./Content.module.scss";
 
 import { v4 as uuidv4 } from "uuid";
 import ToDoList from "../ToDoList/ToDoList";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Content = () => {
-  const [todoList, setTodoList] = useState([
-    {
-      id: uuidv4(),
-      title: "Всё хорошо! #js",
-      ready: true,
-    },
-    {
-      id: uuidv4(),
-      title: "Всё хорошо! #ivashin",
-      ready: false,
-    },
-    {
-      id: uuidv4(),
-      title: "Приходи в гости #open_to_work",
-      ready: true,
-    },
-  ]);
+  const [todoList, setTodoList] = useState(
+    JSON.parse(localStorage.getItem("todoList")) ||
+      [
+        // {
+        //   id: uuidv4(),
+        //   title: "I wanna go to #shop",
+        //   ready: true,
+        // },
+        // {
+        //   id: uuidv4(),
+        //   title: "Hallo world! #js",
+        //   ready: false,
+        // },
+        // {
+        //   id: uuidv4(),
+        //   title: "Hi everybody! #hello",
+        //   ready: true,
+        // },
+      ]
+  );
+
+  useEffect(() => {
+    localStorage.setItem("todoList", JSON.stringify(todoList), [todoList]);
+  });
+
   const [value, setValue] = useState("");
 
   const addNewTags = () => {
