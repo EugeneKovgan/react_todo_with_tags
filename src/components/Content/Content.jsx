@@ -8,22 +8,33 @@ const Content = () => {
   const [todoList, setTodoList] = useState([
     {
       id: uuidv4(),
-      title: "first",
+      title: "Всё хорошо! #js",
       ready: true,
     },
     {
       id: uuidv4(),
-      title: "second",
+      title: "Всё хорошо! #ivashin",
       ready: false,
     },
     {
       id: uuidv4(),
-      title: "third",
+      title: "Приходи в гости #open_to_work",
       ready: true,
     },
   ]);
+  const [value, setValue] = useState("");
 
-  const addNewTags = () => {};
+  const addNewTags = () => {
+    setTodoList([
+      ...todoList,
+      {
+        id: uuidv4(),
+        title: value,
+        ready: false,
+      },
+    ]);
+    setValue("");
+  };
 
   return (
     <div className={styles.wrapper}>
@@ -33,10 +44,16 @@ const Content = () => {
             type="text"
             className={styles.input}
             placeholder={"add new tag"}
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
           />
-          <button onClick={addNewTags} className={styles.add_btn}>
-            add
-          </button>
+          {!value ? (
+            <button disabled={true}>add</button>
+          ) : (
+            <button onClick={addNewTags} className={styles.add_btn}>
+              add
+            </button>
+          )}
         </div>
         <ToDoList todoList={todoList} setTodoList={setTodoList} />
       </div>
