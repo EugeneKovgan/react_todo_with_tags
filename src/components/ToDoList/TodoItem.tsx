@@ -1,9 +1,13 @@
-import styles from './ToDoList.module.scss';
-import { useState } from 'react';
+// @ts-ignore
+import styles from "./ToDoList.module.scss";
+// @ts-ignore
+import React, { useState } from "react";
 
-const TodoItem = ({ item, todoList, setTodoList }) => {
+type Props = { item: any; todoList: []; setTodoList: (string) => [] };
+
+const TodoItem: React.FC<Props> = ({ item, todoList, setTodoList }) => {
   const [editMode, setEditMode] = useState(null);
-  const [editValue, setEditValue] = useState('');
+  const [editValue, setEditValue] = useState("");
 
   const editTags = (id, title) => {
     setEditMode(id);
@@ -28,25 +32,31 @@ const TodoItem = ({ item, todoList, setTodoList }) => {
 
   const markedHashtags = (text) => {
     let newTextArr = [];
-    text.split(' ').forEach((item) => {
-      if (item.startsWith('#')) {
+    text.split(" ").forEach((item) => {
+      if (item.startsWith("#")) {
         item = `<span>${item}</span>`;
         newTextArr.push(item);
       } else {
         newTextArr.push(item);
       }
     });
-    text = newTextArr.join(' ');
+    text = newTextArr.join(" ");
     return text;
   };
 
   return (
     <div className={styles.item}>
       {editMode === item.id ? (
-        <input onChange={(e) => setEditValue(e.target.value)} value={editValue} />
+        <input
+          onChange={(e) => setEditValue(e.target.value)}
+          value={editValue}
+        />
       ) : (
         // <p className={item.ready ? styles.ready : ''}>{markedHashtags(item.title)}</p>    // need to fix !
-        <div className={styles.text} dangerouslySetInnerHTML={{ __html: markedHashtags(item.title) }} />
+        <div
+          className={styles.text}
+          dangerouslySetInnerHTML={{ __html: markedHashtags(item.title) }}
+        />
       )}
       <div className={styles.btn_block}>
         {editMode === item.id ? (
