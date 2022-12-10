@@ -33,6 +33,15 @@ const Content = () => {
 
   const [value, setValue] = useState('');
   const [filtered, SetFilter] = useState(todoList);
+  const [listOfTheTags, setlistOfTheTags] = useState([]);
+
+  useEffect(() => {
+    const newList = [];
+    todoList.map((item) => {
+      newList.push(...item.title.split(' ').filter((item) => item.startsWith('#')));
+    });
+    setlistOfTheTags(Array.from(new Set(newList)));
+  }, [todoList]);
 
   const addNewTags = () => {
     setTodoList([
@@ -47,13 +56,11 @@ const Content = () => {
   };
 
   const filterByName = (status) => {
-    console.log(status);
     if (status === 'all') {
       SetFilter(todoList);
     } else {
-      let newTodoList = [...todoList].filter((item) => item.ready === status);
-      console.log(newTodoList);
-      SetFilter(newTodoList);
+      const newList = [...todoList].filter((item) => item.title.includes(status));
+      SetFilter(newList);
     }
   };
 
@@ -80,7 +87,7 @@ const Content = () => {
             </button>
           )}
         </div>
-        <Filter filterByName={filterByName} />
+        <Filter filterByName={filterByName} listOfTheTags={listOfTheTags} />
         <ToDoList todoList={todoList} setTodoList={setTodoList} filtered={filtered} />
       </div>
     </div>

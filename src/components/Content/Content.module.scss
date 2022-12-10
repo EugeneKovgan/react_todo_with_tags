@@ -10,13 +10,16 @@
     display: flex;
     gap: 0.5rem;
     min-width: 100%;
+    input {
+      width: 70%;
+    }
   }
 }
 
 button {
   background: rgba(175, 203, 240, 0.45);
   border: 1px solid #afcbf0;
-  width: 80px;
+  min-width: 20px;
   height: 36px;
   border-radius: 30px;
   cursor: pointer;

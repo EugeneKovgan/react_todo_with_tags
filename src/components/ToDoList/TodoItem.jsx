@@ -1,9 +1,9 @@
-import styles from "./ToDoList.module.scss";
-import { useState } from "react";
+import styles from './ToDoList.module.scss';
+import { useState } from 'react';
 
 const TodoItem = ({ item, todoList, setTodoList }) => {
   const [editMode, setEditMode] = useState(null);
-  const [editValue, setEditValue] = useState("");
+  const [editValue, setEditValue] = useState('');
 
   const editTags = (id, title) => {
     setEditMode(id);
@@ -22,29 +22,31 @@ const TodoItem = ({ item, todoList, setTodoList }) => {
   };
 
   const deleteItem = (id) => {
-    const newTodoList = [...todoList].filter((item) => item.id != id);
+    const newTodoList = [...todoList].filter((item) => item.id !== id);
     setTodoList(newTodoList);
   };
 
-  const setTodoReady = (id) => {
-    const newTodoList = [...todoList].filter((item) => {
-      if (id === item.id) {
-        item.ready = !item.ready;
+  const markedHashtags = (text) => {
+    let newTextArr = [];
+    text.split(' ').forEach((item) => {
+      if (item.startsWith('#')) {
+        item = `<span>${item}</span>`;
+        newTextArr.push(item);
+      } else {
+        newTextArr.push(item);
       }
-      return item;
     });
-    setTodoList(newTodoList);
+    text = newTextArr.join(' ');
+    return text;
   };
 
   return (
     <div className={styles.item}>
       {editMode === item.id ? (
-        <input
-          onChange={(e) => setEditValue(e.target.value)}
-          value={editValue}
-        />
+        <input onChange={(e) => setEditValue(e.target.value)} value={editValue} />
       ) : (
-        <p className={item.ready ? styles.ready : ""}>{item.title}</p>
+        // <p className={item.ready ? styles.ready : ''}>{markedHashtags(item.title)}</p>    // need to fix !
+        <div className={styles.text} dangerouslySetInnerHTML={{ __html: markedHashtags(item.title) }} />
       )}
       <div className={styles.btn_block}>
         {editMode === item.id ? (
@@ -52,9 +54,6 @@ const TodoItem = ({ item, todoList, setTodoList }) => {
         ) : (
           <>
             <button onClick={() => editTags(item.id, item.title)}>edit</button>
-            <button onClick={() => setTodoReady(item.id)}>
-              {item.ready ? "ready" : "no ready"}
-            </button>
             <button onClick={() => deleteItem(item.id)}>del</button>
           </>
         )}

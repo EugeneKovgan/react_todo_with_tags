@@ -1,4 +1,9 @@
 .filter {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.5rem;
+}
+
+.btn_all {
+  border: 1px solid red;
 }
